@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const http = require("http");
 const swaggerRoutes = require("./routes/swagger-route");
-
+const getMusicRoutes = require("./routes/getMusic-route");
 const app = express();
 const server = http.createServer(app);
 
@@ -13,13 +13,16 @@ app.use(express.urlencoded({ limit: "50mb" }));
 
 // routes and api calls
 app.use("/swagger", swaggerRoutes);
-app.use(express.static(path.join(__dirname, "..", "client", "build")));
+app.use("/getMusic", getMusicRoutes);
+// app.use(express.static(path.join(__dirname, "..", "client", "build")));
+app.use(express.static(path.join(__dirname, "../public", "index.html")));
 
 // default path to serve up index.html (single page application)
 app.use("", (req, res) => {
   res
     .status(200)
-    .sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
+    // .sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
+    .sendFile(path.join(__dirname, "../public", "index.html"));
 });
 
 // start node server
