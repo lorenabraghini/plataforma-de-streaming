@@ -1,9 +1,10 @@
 const SpotifyWebApi = require("spotify-web-api-node");
+const dataPodcasts = require("./dataPodcasts.json");
 const fs = require("fs");
 
 const spotifyApi = new SpotifyWebApi();
 spotifyApi.setAccessToken(
-  "BQDyeeAni2DOTalV5eTfuSCzES4_2Q3O9g_6jkf6i5lqjleylxqSxcSg0hmgq2dpf2TdwCmI5qCxA5t0PRHyrUPgdco3Sqd9L98LZeAV7zShDvFaSr0MqNMi9olEwMgO3lOPuqDJdJiS57v__1CKZaKZSxvR-1gxSiyUz5p7mu6t9pSdvaw91gv44KHvQI_CGC0s3HkQzMhEGzwDsTXbZSD2ruMbkGs_yd1R4o6QoC9sKafDAUEuEsGYouwGePywEZW_hZ63tcFdObBihhjw2MlUyUPyoNo"
+  "BQAMbNmBQ-dvt3234O0f-nUHR5hbFBKuZ_JrIhB5QjMKd6AtWyy8GZeUnBmM0tB6TQcIz6jPo_xsAFme1uX-aKtC2kUY2Wxp4yA-pAx7K4hiaBOgKHa6f5HuuydDQ9QkjuNLOo4via8U19QB2C7bMMnpLCHXD4osjok50wrwjiJG4Vo3GODYS2OiE7nJE6scA9HOaN6k3LpmQQAUfadkj2JjBZ_7UeadHaJnUP6v34sW8gH40_ECUBNwawb3MWn0cky4vQgteyHS5PsBimIP8B9AX6vSTQ"
 );
 
 let playlists = {};
@@ -11,17 +12,46 @@ let musicas = {};
 let albuns = {};
 let artistas = {};
 
+let podcasts = dataPodcasts.podcasts;
+let episodios = dataPodcasts.episodios;
+
+async function getPodcasts() {
+  let shows = await spotifyApi.getMySavedShows();
+  for (let showInfo of shows.body.items) {
+    if (!podcasts[showInfo.show.name]) savePodcast(showInfo);
+    showInfo = await spotifyApi.getShow(showInfo.show.id);
+    for (let episode of showInfo.body.episodes.items) {
+      if (!episodios[episode.id]) saveEpisode(episode);
+    }
+  }
+  fs.writeFileSync(
+    "dataPodcasts.json",
+    JSON.stringify({ podcasts, episodios })
+  );
+}
+
+function saveEpisode(episode) {
+  episodios[episode.id] = {};
+  episodios[episode.id].nome = episode.name;
+  episodios[episode.id].dataPublicacao = episode.release_date;
+  episodios[episode.id].descricao = episode.description;
+  episodios[episode.id].url = episode.audio_preview_url;
+  episodios[episode.id].duracao = episode.duration_ms;
+}
+
+function savePodcast(showInfo) {
+  podcasts[showInfo.show.name] = {};
+  podcasts[showInfo.show.name].descricao = showInfo.show.description;
+  podcasts[showInfo.show.name].qtdEps = showInfo.show.total_episodes;
+  podcasts[showInfo.show.name].genero = "Podcast";
+  podcasts[showInfo.show.name].imagem = showInfo.show.images[1];
+  podcasts[showInfo.show.name].idioma = showInfo.show.languages[0];
+}
+
 async function main() {
-  console.log("gustavo");
   await getData("12177373955");
-  console.log("lorena");
   await getData("lorenabraghinim");
-  console.log("bia");
   await getData("beatrizgnovais");
-  console.log("playlists", Object.keys(playlists));
-  console.log("musicas", Object.keys(musicas));
-  console.log("albuns", Object.keys(albuns));
-  console.log("artistas", Object.keys(artistas));
   fs.writeFileSync(
     "data.json",
     JSON.stringify({ playlists, musicas, albuns, artistas })
@@ -36,7 +66,6 @@ async function getData(user) {
     for (let track of tracks.body.items) {
       if (!musicas[track.track.id]) {
         const album = await spotifyApi.getAlbum(track.track.album.id);
-        console.log(track.track.name);
         saveTrack(track, album);
         saveAlbum(album);
         for (let artist of album.body.artists) {
@@ -53,6 +82,7 @@ function savePlaylist(playlist) {
   playlists[playlist.name].descricao = playlist.description;
   playlists[playlist.name].autor = playlist.owner.id;
 }
+
 function saveTrack(track, album) {
   musicas[track.track.id] = {};
   musicas[track.track.id].nome = track.track.name;
@@ -78,4 +108,5 @@ function saveArtist(artist) {
   artistas[artist.body.id].imagem = artist.body.images[1].url;
   artistas[artist.body.id].genero = artist.body.genres[0];
 }
-main();
+
+// main();
