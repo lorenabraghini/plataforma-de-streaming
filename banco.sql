@@ -2,7 +2,7 @@ USE streaming;
 
 CREATE TABLE Usuario
 (
-    id integer PRIMARY KEY,
+    id varchar(200) PRIMARY KEY,
     login varchar(200),
     nome varchar(100),
     imagem varchar(200),
@@ -19,7 +19,7 @@ CREATE TABLE Playlist
 
 CREATE TABLE Artista
 (
-    id integer PRIMARY KEY,
+    id varchar(200) PRIMARY KEY,
     nome varchar(100),
     qtd_seguidores integer,
     ouvintesMensais integer,
@@ -29,7 +29,7 @@ CREATE TABLE Artista
 
 CREATE TABLE Musica
 (
-    idMusica integer PRIMARY KEY,
+    idMusica varchar(200) PRIMARY KEY,
     nome varchar(100),
     url varchar(200),
     duracao integer,
@@ -59,7 +59,7 @@ CREATE TABLE Podcast
 
 CREATE TABLE EpisodioPodcast
 (
-    idEpPodcast integer PRIMARY KEY,
+    idEpPodcast varchar(200) PRIMARY KEY,
     nome varchar(100),
     dataPublicacao date,
     descricao varchar(200),
@@ -70,43 +70,43 @@ CREATE TABLE EpisodioPodcast
 CREATE TABLE PodcastPossui
 (
     nomePodcast varchar(100) PRIMARY KEY REFERENCES Podcast (nome),
-    idEpPodcast integer REFERENCES EpisodioPodcast (idEpPodcast)
+    idEpPodcast varchar(200) REFERENCES EpisodioPodcast (idEpPodcast)
 );
 
 CREATE TABLE PossuiPlaylist
 (
     nomePlaylist varchar(100) PRIMARY KEY REFERENCES Playlist (nome),
-    idMusica integer REFERENCES Musica (idMusica),
-    idArtista integer REFERENCES Artista (id)
+    idMusica varchar(200) REFERENCES Musica (idMusica),
+    idArtista varchar(200) REFERENCES Artista (id)
 );
 
 CREATE TABLE ArtistaCompoe
 (
-    idArtista integer PRIMARY KEY REFERENCES Artista (id),
+    idArtista varchar(200) PRIMARY KEY REFERENCES Artista (id),
     nomeAlbum varchar(100) REFERENCES Album (nome)
 );
 
 CREATE TABLE PertenceAlbum
 (
     nomeAlbum varchar(100) PRIMARY KEY REFERENCES Album (nome),
-    idMusica integer REFERENCES Musica (idMusica)
+    idMusica varchar(200) REFERENCES Musica (idMusica)
 );
 
 CREATE TABLE UsuarioSegue
 (
-    idUsuarioSeguidor integer PRIMARY KEY REFERENCES Usuario (id),
-    idUsuarioSeguindo integer REFERENCES Usuario (id),
-    idArtista integer REFERENCES Artista (id)
+    idUsuarioSeguidor varchar(200) PRIMARY KEY REFERENCES Usuario (id),
+    idUsuarioSeguindo varchar(200) REFERENCES Usuario (id),
+    idArtista varchar(200) REFERENCES Artista (id)
 );
 
 CREATE TABLE ArtistaPerforma
 (
-    idArtista integer PRIMARY KEY REFERENCES Artista (id),
-    idMusica integer REFERENCES Musica (idMusica)
+    idArtista varchar(200) PRIMARY KEY REFERENCES Artista (id),
+    idMusica varchar(200) REFERENCES Musica (idMusica)
 );
 
 CREATE TABLE PlaylistContem
 (
     nomePlaylist varchar(100) PRIMARY KEY REFERENCES Playlist (nome),
-    idMusica integer REFERENCES Musica (idMusica)
+    idMusica varchar(200) REFERENCES Musica (idMusica)
 );

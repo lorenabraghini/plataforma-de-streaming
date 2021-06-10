@@ -1,112 +1,120 @@
 const SpotifyWebApi = require("spotify-web-api-node");
-const dataPodcasts = require("./dataPodcasts.json");
 const fs = require("fs");
+const {inserir} = require('./server/common/Database/helpers')
 
 const spotifyApi = new SpotifyWebApi();
 spotifyApi.setAccessToken(
-  "BQAMbNmBQ-dvt3234O0f-nUHR5hbFBKuZ_JrIhB5QjMKd6AtWyy8GZeUnBmM0tB6TQcIz6jPo_xsAFme1uX-aKtC2kUY2Wxp4yA-pAx7K4hiaBOgKHa6f5HuuydDQ9QkjuNLOo4via8U19QB2C7bMMnpLCHXD4osjok50wrwjiJG4Vo3GODYS2OiE7nJE6scA9HOaN6k3LpmQQAUfadkj2JjBZ_7UeadHaJnUP6v34sW8gH40_ECUBNwawb3MWn0cky4vQgteyHS5PsBimIP8B9AX6vSTQ"
+  "BQCURAZewnmWJspLQVQTH3unI99qFWBF2bBywwZ4WfhbgJj_gsggCZWKVyys_zvYH5-tFNkC1O18nDtRGTZ5JCv1ajgagDe-VRgBnGBlNvuPsAM50RzYd9jlKTADO1cqGtHTdyvUZYbGvm9KLrgEIU79XwKgdyAkcIimICvmfQFu3FsHbN5iMv2r3R-2ij8cusv5asuNHZ1qQTK6UCobo3jSVxxWjSHS71RFWSSexwzZdhO6Wxoj3crCqsM4eywX6ukrj-rkck83iKtSDE_l5KoxvNc-Bg"
 );
-
-let playlists = {};
-let musicas = {};
-let albuns = {};
-let artistas = {};
-
-let podcasts = dataPodcasts.podcasts;
-let episodios = dataPodcasts.episodios;
 
 async function getPodcasts() {
   let shows = await spotifyApi.getMySavedShows();
   for (let showInfo of shows.body.items) {
-    if (!podcasts[showInfo.show.name]) savePodcast(showInfo);
+    let pod = savePodcast(showInfo);
+    inserir('Podcast', pod).catch(e => console.log('DUPLICADO'));
     showInfo = await spotifyApi.getShow(showInfo.show.id);
     for (let episode of showInfo.body.episodes.items) {
-      if (!episodios[episode.id]) saveEpisode(episode);
+      let ep = saveEpisode(episode);
+      inserir('EpisodioPodcast', ep).catch(e => console.log('DUPLICADO'));
     }
   }
-  fs.writeFileSync(
-    "dataPodcasts.json",
-    JSON.stringify({ podcasts, episodios })
-  );
 }
 
 function saveEpisode(episode) {
-  episodios[episode.id] = {};
-  episodios[episode.id].nome = episode.name;
-  episodios[episode.id].dataPublicacao = episode.release_date;
-  episodios[episode.id].descricao = episode.description;
-  episodios[episode.id].url = episode.audio_preview_url;
-  episodios[episode.id].duracao = episode.duration_ms;
+  let x = {}
+  x.id = episode.id;
+  x.nome = episode.name;
+  x.dataPublicacao = episode.release_date;
+  x.descricao = episode.description;
+  x.url = episode.audio_preview_url;
+  x.duracao = episode.duration_ms;
+  
+  return x
 }
 
 function savePodcast(showInfo) {
-  podcasts[showInfo.show.name] = {};
-  podcasts[showInfo.show.name].descricao = showInfo.show.description;
-  podcasts[showInfo.show.name].qtdEps = showInfo.show.total_episodes;
-  podcasts[showInfo.show.name].genero = "Podcast";
-  podcasts[showInfo.show.name].imagem = showInfo.show.images[1];
-  podcasts[showInfo.show.name].idioma = showInfo.show.languages[0];
+  let x = {}
+  x.name = showInfo.show.name;
+  x.descricao = showInfo.show.description;
+  x.genero = "Podcast";
+  x.imagem = showInfo.show.images[1];
+  x.idioma = showInfo.show.languages[0];
+  x.qtdEps = showInfo.show.total_episodes;
+
+  return x
 }
 
 async function main() {
   await getData("12177373955");
   await getData("lorenabraghinim");
   await getData("beatrizgnovais");
-  fs.writeFileSync(
-    "data.json",
-    JSON.stringify({ playlists, musicas, albuns, artistas })
-  );
 }
 
 async function getData(user) {
   let user_playlists = await spotifyApi.getUserPlaylists(user);
   for (let playlist of user_playlists.body.items) {
-    savePlaylist(playlist);
-    const tracks = await spotifyApi.getPlaylistTracks(playlist.id);
-    for (let track of tracks.body.items) {
-      if (!musicas[track.track.id]) {
-        const album = await spotifyApi.getAlbum(track.track.album.id);
-        saveTrack(track, album);
-        saveAlbum(album);
-        for (let artist of album.body.artists) {
-          let artistInfos = await spotifyApi.getArtist(artist.id);
-          saveArtist(artistInfos);
-        }
-      }
-    }
+    let play = savePlaylist(playlist);
+    inserir('Playlist', play).catch(e => console.log('DUPLICADO'))
+    //const tracks = await spotifyApi.getPlaylistTracks(playlist.id);
+    // for (let track of tracks.body.items) {
+    //     const album = await spotifyApi.getAlbum(track.track.album.id);
+    //     let tr = saveTrack(track, album);
+    //     inserir('Musica', tr).catch(e => console.log('DUPLICADO'));
+    //     let al = saveAlbum(album);
+    //     inserir('Album', al).catch(e => console.log('DUPLICADO'))
+    //     for (let artist of album.body.artists) {
+    //       let artistInfos = await spotifyApi.getArtist(artist.id);
+    //       let art = saveArtist(artistInfos);
+    //       inserir('Artista', art).catch(e => console.log('DUPLICADO'));
+    //     }
+      
+    // }
   }
 }
 
 function savePlaylist(playlist) {
-  playlists[playlist.name] = {};
-  playlists[playlist.name].descricao = playlist.description;
-  playlists[playlist.name].autor = playlist.owner.id;
+  let x = {}
+  x.name = playlist.name
+  x.descricao = playlist.description;
+  x.autor = playlist.owner.id;
+
+  return x
 }
 
 function saveTrack(track, album) {
-  musicas[track.track.id] = {};
-  musicas[track.track.id].nome = track.track.name;
-  musicas[track.track.id].fonte = track.track.preview_url;
-  musicas[track.track.id].duracao = track.track.duration_ms;
-  musicas[track.track.id].popularidade = track.track.popularity;
-  musicas[track.track.id].genero = album.body.genres[0];
+  let x = {};
+  x.id = track.track.id;
+  x.nome = track.track.name;
+  x.fonte = track.track.preview_url;
+  x.duracao = track.track.duration_ms;
+  x.popularidade = track.track.popularity;
+  x.genero = album.body.genres[0];
+
+  return x
 }
 
 function saveAlbum(album) {
-  albuns[album.body.name] = {};
-  albuns[album.body.name].data = album.body.release_date;
-  albuns[album.body.name].qtdMusicas = album.body.tracks.total;
-  albuns[album.body.name].genero = album.body.genres[0];
-  albuns[album.body.name].imagem = album.body.images[1].url;
+  let x = {};
+  x.name = album.body.name;
+  x.data = album.body.release_date;
+  x.qtdMusicas = album.body.tracks.total;
+  x.genero = album.body.genres[0];
+  x.imagem = album.body.images[1].url;
+
+  return x
 }
 
 function saveArtist(artist) {
-  artistas[artist.body.id] = {};
-  artistas[artist.body.id].nome = artist.body.name;
-  artistas[artist.body.id].seguidores = artist.body.followers;
-  artistas[artist.body.id].ouvintes = artist.body.popularity;
-  artistas[artist.body.id].imagem = artist.body.images[1].url;
-  artistas[artist.body.id].genero = artist.body.genres[0];
+  let x = {};
+  x.id = artist.body.id;
+  x.nome = artist.body.name;
+  x.seguidores = artist.body.followers;
+  x.ouvintes = artist.body.popularity;
+  x.imagem = artist.body.images[1].url;
+  x.genero = artist.body.genres[0];
+
+  return x
 }
 
-// main();
+main();
+//getPodcasts();

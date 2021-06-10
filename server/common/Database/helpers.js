@@ -22,20 +22,29 @@ async function conectar () {
     console.log(x)
 }
 //conectar()
+function handleData(data){
+    let values = ''
+    Object.entries(data).map(([key,value]) => {
+        if(values !== '') values += ', '
+        if(typeof value === "string") values+= `'${value}'`
+        else if(typeof value === 'object' || !value) values += 'null';
+        else values += `${value}`
+    })
+    console.log(values)
+    return values
+}
 
-function addMusica(musica){
+function inserir(tabela, data){
     return new Promise(async (resolve, reject) => {
         try {
+            const values = handleData(data)
             const db = await sql.connect(sqlConfig)
-            await db.request().query(`INSERT INTO [Musica] VALUES (${musica.id}, '${musica.nome}', '${musica.url}', ${musica.duracao}, ${musica.popularidade}, '${musica.genero}')`)
+            await db.request().query(`INSERT INTO [${tabela}] VALUES (${values})`)
             resolve()
         } catch (error) {
             reject(error)
         }
     })
 }
-async function teste(){
-    await addMusica({})
-}
 
-teste()
+module.exports = {inserir}
