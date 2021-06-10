@@ -14,7 +14,7 @@ CREATE TABLE Playlist
 (
     nome varchar(100) PRIMARY KEY,
     descricao varchar(200),
-    autor integer REFERENCES Usuario (id),
+    autor varchar(200) REFERENCES Usuario (id),
 );
 
 CREATE TABLE Artista

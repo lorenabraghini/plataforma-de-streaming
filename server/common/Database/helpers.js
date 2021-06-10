@@ -1,25 +1,25 @@
-const sql = require("mssql");
+const sql = require('mssql')
 
 const sqlConfig = {
-  user: "BD",
-  password: "epbancodedados",
-  database: "Streaming",
-  server: "localhost",
-  // port: 1433,
-  pool: {
-    max: 10,
-    min: 0,
-    idleTimeoutMillis: 30000,
-  },
-  options: {
-    encrypt: false,
-    trustServerCertificate: true,
-  },
-};
+    user: "BD",
+    password: "epbancodedados",
+    database: "Streaming",
+    server: 'localhost',
+    port:1433,
+    pool:  {
+      max: 10,
+      min: 0,
+      idleTimeoutMillis: 30000
+    },
+    options: {
+      encrypt: false, // for azure
+      trustServerCertificate: true // change to true for local dev / self-signed certs
+    }
+  }
 
-async function conectar() {
-  const x = await sql.connect(sqlConfig);
-  console.log(x);
+async function conectar () {
+    const x = await sql.connect(sqlConfig)
+    console.log(x)
 }
 //conectar()
 function handleData(data){
@@ -46,17 +46,18 @@ function inserir(tabela, data){
         }
     })
 }
+
 function select(tabela){
     return new Promise(async (resolve, reject) => {
         try {
             const db = await sql.connect(sqlConfig)
             const res = await db.request().query(`SELECT * FROM ${tabela}`)
-            console.log(res)
-            resolve(res)
+            console.log(res.recordset)
+            resolve(res.recordset)
         } catch (error) {
             reject(error)
         }
     })
 }
-select("Playlist")
-module.exports = {inserir}
+
+module.exports = {inserir, select}
