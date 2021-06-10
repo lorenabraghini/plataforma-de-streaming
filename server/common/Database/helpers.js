@@ -5,7 +5,7 @@ const sqlConfig = {
   password: "epbancodedados",
   database: "Streaming",
   server: "localhost",
-  port: 1433,
+  // port: 1433,
   pool: {
     max: 10,
     min: 0,
@@ -22,24 +22,41 @@ async function conectar() {
   console.log(x);
 }
 //conectar()
-
-function addMusica(musica) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const db = await sql.connect(sqlConfig);
-      await db
-        .request()
-        .query(
-          `INSERT INTO [Musica] VALUES (${musica.id}, '${musica.nome}', '${musica.url}', ${musica.duracao}, ${musica.popularidade}, '${musica.genero}')`
-        );
-      resolve();
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
-async function teste() {
-  await addMusica({});
+function handleData(data){
+    let values = ''
+    Object.entries(data).map(([key,value]) => {
+        if(values !== '') values += ', '
+        if(typeof value === "string") values+= `'${value}'`
+        else if(typeof value === 'object' || !value) values += 'null';
+        else values += `${value}`
+    })
+    console.log(values)
+    return values
 }
 
-teste();
+function inserir(tabela, data){
+    return new Promise(async (resolve, reject) => {
+        try {
+            const values = handleData(data)
+            const db = await sql.connect(sqlConfig)
+            await db.request().query(`INSERT INTO [${tabela}] VALUES (${values})`)
+            resolve()
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+function select(tabela){
+    return new Promise(async (resolve, reject) => {
+        try {
+            const db = await sql.connect(sqlConfig)
+            const res = await db.request().query(`SELECT * FROM ${tabela}`)
+            console.log(res)
+            resolve(res)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+select("Playlist")
+module.exports = {inserir}
