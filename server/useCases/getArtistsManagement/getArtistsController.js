@@ -1,7 +1,7 @@
 const {select} = require('../../common/Database/helpers.js')  
 async function index(req, res) {
-  let x = await select('Musica')
-  res.send({musicas:x})
+  let x = await select('Artista')
+  res.send({artistas:x})
 }
 module.exports = {
   index
