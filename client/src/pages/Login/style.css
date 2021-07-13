@@ -1,0 +1,40 @@
+#content {
+  height: 100vh;
+  background-image: url(../../images/img1.png);
+}
+
+#title {
+  margin-top: 10vh;
+  font-size: 100px;
+  color: white;
+  font-family: "Josefin Slab";
+  cursor: default;
+}
+
+#login {
+  width: 42vw;
+  height: 43vh;
+  margin-top: 20vh;
+  flex-direction: column;
+  margin-left: 452px;
+  background-color: #1e0f24;
+}
+
+#login div {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+#login div input {
+  margin-top: 60px;
+  color: white;
+  background-color: #1e0f24;
+  border: none;
+  border-bottom: 1px solid white;
+  font-family: "Open Sans";
+}
+
+#loginbtn {
+  margin-top: 60px;
+}
