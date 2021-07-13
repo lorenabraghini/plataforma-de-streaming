@@ -4,6 +4,12 @@ const path = require("path");
 const http = require("http");
 const swaggerRoutes = require("./routes/swagger-route");
 const getMusicRoutes = require("./routes/getMusic-route");
+const getPlaylistsRoutes = require("./routes/getPlaylists-route");
+const getArtistsRoutes = require("./routes/getArtists-route");
+const getUsersRoutes = require("./routes/getUsers-route");
+const getAlbunsRoutes = require("./routes/getAlbuns-route");
+const getPodcastsRoutes = require("./routes/getPodcasts-route");
+const getEpisodesRoutes = require("./routes/getEpisodes-route");
 const app = express();
 const server = http.createServer(app);
 
@@ -14,6 +20,13 @@ app.use(express.urlencoded({ limit: "50mb" }));
 // routes and api calls
 app.use("/swagger", swaggerRoutes);
 app.use("/getMusic", getMusicRoutes);
+app.use("/getPlaylists", getPlaylistsRoutes);
+app.use("/getArtists", getArtistsRoutes);
+app.use("/getUsers", getUsersRoutes);
+app.use("/getAlbuns", getAlbunsRoutes);
+app.use("/getPodcasts", getPodcastsRoutes);
+app.use("/getEpisodes", getEpisodesRoutes);
+
 // app.use(express.static(path.join(__dirname, "..", "client", "build")));
 app.use(express.static(path.join(__dirname, "../public", "index.html")));
 
