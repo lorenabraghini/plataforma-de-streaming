@@ -2,12 +2,13 @@ header {
   height: 8vh;
   box-shadow: 0.1em 0.1em 0.05em #1e0f24;
   padding-left: 100px;
-  margin-bottom: 50px;
 }
 
 #header {
   width: 100%;
   background-color: #1e0f24;
+  display: flex;
+  justify-content: space-between;
 }
 
 #header h1 {
@@ -16,4 +17,9 @@ header {
   font-size: 50px;
   padding-top: 10px;
   cursor: default;
+}
+
+#avatar{
+  margin-right: 30px;
+  margin-top: 10px;
 }

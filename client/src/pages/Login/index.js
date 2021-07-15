@@ -15,7 +15,6 @@ export default function Login() {
   return (
     <div
       id="content"
-      style={{ backgroundImage: `${process.env.PUBLIC_URL}/unknown.png` }}
     >
       <Header />
       <Card id="login">

@@ -30,6 +30,7 @@
     ]
   },
   "dependencies": {
+    "@material-ui/icons": "^4.11.2",
     "async": "^3.2.0",
     "axios": "^0.21.1",
     "connect-timeout": "^1.9.0",

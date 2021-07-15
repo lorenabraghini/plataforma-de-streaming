@@ -1,0 +1,21 @@
+#botoes_barra{
+height: 50px;
+font-family: "Josefin Slab";
+background-color: #1e0f24;
+color: white;
+border: none;
+
+}
+#botoes_barra + #botoes_barra{
+    margin-top: 20px;
+}
+#divider{
+    background-color:white;
+    margin-top: 30px;
+}
+
+#botoes_barra p{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

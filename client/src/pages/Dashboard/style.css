@@ -1,0 +1,18 @@
+#fundo_dashboard {
+    height: 100vh;
+    background-image: url(../../images/90.png);
+  }
+
+#barra_lateral {
+    width: 250px;
+    height: 92vh;
+    background-color: #1e0f24;
+    padding-top: 50px;
+
+}
+
+#prim_divider{
+
+    background-color: white;
+    margin-bottom: 20px;
+}
