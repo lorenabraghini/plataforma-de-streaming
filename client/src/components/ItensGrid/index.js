@@ -4,8 +4,9 @@ import { useGlobalState } from "../../hooks/globalState";
 import ItensList from "../ItensList";
 import "./style.css";
 
-export default function ItensGrid({ nome, descricao, imagem }) {
-  const { selectedCategory, setComponent, itens } = useGlobalState();
+export default function ItensGrid() {
+  const { selectedCategory, setComponent, itens, nome, descricao } =
+    useGlobalState();
   function handleClick() {
     setComponent(<ItensList />);
   }
@@ -15,7 +16,7 @@ export default function ItensGrid({ nome, descricao, imagem }) {
       <section id="grid">
         {itens.map((item) => (
           <Card className="item-grid" onClick={handleClick}>
-            <img src={item[imagem]} className="imagem" />
+            <img src={item.imagem} className="imagem" />
             <label className="info-principal">{item[nome]}</label>
             {descricao ? (
               <label className="info">{item[descricao]}</label>

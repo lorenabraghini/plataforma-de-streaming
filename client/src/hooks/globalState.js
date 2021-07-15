@@ -14,6 +14,8 @@ export default function GlobalStateProvider({ children }) {
   const [itens, setItens] = useState([]);
   const [podcasts, setPodcasts] = useState([]);
   const [episodios, setEpisodios] = useState([]);
+  const [nome, setNome] = useState("nome");
+  const [descricao, setDescricao] = useState("descricao");
   const [component, setComponent] = useState(
     <ItensGrid nome="nome" descricao={null} imagem="imagem" />
   );
@@ -42,6 +44,10 @@ export default function GlobalStateProvider({ children }) {
         setEpisodios,
         itens,
         setItens,
+        nome,
+        setNome,
+        descricao,
+        setDescricao,
       }}
     >
       {children}

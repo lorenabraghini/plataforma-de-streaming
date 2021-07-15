@@ -54,17 +54,21 @@ async function getData(user) {
   let user_playlists = await spotifyApi.getUserPlaylists(user);
   for (let playlist of user_playlists.body.items) {
     let play = savePlaylist(playlist);
+    console.log(play.name);
     inserir("Playlist", play).catch((e) => console.log("DUPLICADO"));
     const tracks = await spotifyApi.getPlaylistTracks(playlist.id);
     for (let track of tracks.body.items) {
       const album = await spotifyApi.getAlbum(track.track.album.id);
       let tr = saveTrack(track, album);
+      console.log(tr.nome);
       inserir("Musica", tr).catch((e) => console.log("DUPLICADO"));
       let al = saveAlbum(album);
+      console.log(al.name);
       inserir("Album", al).catch((e) => console.log("DUPLICADO"));
       for (let artist of album.body.artists) {
         let artistInfos = await spotifyApi.getArtist(artist.id);
         let art = saveArtist(artistInfos);
+        console.log(art.nome);
         inserir("Artista", art).catch((e) => console.log("DUPLICADO"));
       }
     }
@@ -76,7 +80,7 @@ function savePlaylist(playlist) {
   x.name = playlist.name;
   x.descricao = playlist.description;
   x.autor = playlist.owner.id;
-  x.imagem = playlist.images[1].url;
+  x.imagem = playlist.images[0].url;
   return x;
 }
 
