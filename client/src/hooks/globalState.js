@@ -6,7 +6,17 @@ export default function GlobalStateProvider({ children }) {
   //declare variables
   const [selectedCategory, setSelectedCategory] = useState("Playlists");
   const [selectedItem, setSelectedItem] = useState();
-  const [component, setComponent] = useState(<ItensGrid />);
+  const [musicas, setMusicas] = useState([]);
+  const [playlists, setPlaylists] = useState([]);
+  const [artistas, setArtistas] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [albuns, setAlbuns] = useState([]);
+  const [itens, setItens] = useState([]);
+  const [podcasts, setPodcasts] = useState([]);
+  const [episodios, setEpisodios] = useState([]);
+  const [component, setComponent] = useState(
+    <ItensGrid nome="nome" descricao={null} imagem="imagem" />
+  );
   return (
     <GlobalStateContext.Provider
       value={{
@@ -16,6 +26,22 @@ export default function GlobalStateProvider({ children }) {
         setSelectedItem,
         component,
         setComponent,
+        musicas,
+        setMusicas,
+        playlists,
+        setPlaylists,
+        artistas,
+        setArtistas,
+        users,
+        setUsers,
+        albuns,
+        setAlbuns,
+        podcasts,
+        setPodcasts,
+        episodios,
+        setEpisodios,
+        itens,
+        setItens,
       }}
     >
       {children}

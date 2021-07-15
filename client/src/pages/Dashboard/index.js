@@ -6,9 +6,10 @@ import ItensGrid from "../../components/ItensGrid";
 import ItensList from "../../components/ItensList";
 import { useGlobalState } from "../../hooks/globalState";
 import "./style.css";
+import api from "../../services/api";
 
 export default function Dashboard() {
-  const { component } = useGlobalState();
+  const { component, setItens } = useGlobalState();
   const itens = [
     "Playlists",
     "Álbuns",
@@ -17,6 +18,14 @@ export default function Dashboard() {
     "Podcasts",
     "Configurações",
   ];
+
+  useEffect(() => {
+    api.get("/getAlbuns").then((response) => {
+      setItens(response.data.albuns);
+      console.log(response.data.albuns);
+    });
+  }, []);
+
   return (
     <div id="fundo_dashboard">
       <Header />

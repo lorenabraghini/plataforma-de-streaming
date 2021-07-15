@@ -4,8 +4,8 @@ import { useGlobalState } from "../../hooks/globalState";
 import ItensList from "../ItensList";
 import "./style.css";
 
-export default function ItensGrid() {
-  const { selectedCategory, setComponent } = useGlobalState();
+export default function ItensGrid({ nome, descricao, imagem }) {
+  const { selectedCategory, setComponent, itens } = useGlobalState();
   function handleClick() {
     setComponent(<ItensList />);
   }
@@ -13,22 +13,15 @@ export default function ItensGrid() {
     <div>
       <h1>{selectedCategory}</h1>
       <section id="grid">
-        <Card className="item-grid" onClick={handleClick}></Card>
-        <Card className="item-grid" onClick={handleClick}></Card>
-        <Card className="item-grid" onClick={handleClick}></Card>
-        <Card className="item-grid" onClick={handleClick}></Card>
-        <Card className="item-grid" onClick={handleClick}></Card>
-        <Card className="item-grid" onClick={handleClick}></Card>
-        <Card className="item-grid" onClick={handleClick}></Card>
-        <Card className="item-grid" onClick={handleClick}></Card>
-        <Card className="item-grid" onClick={handleClick}></Card>
-        <Card className="item-grid"></Card>
-        <Card className="item-grid"></Card>
-        <Card className="item-grid"></Card>
-        <Card className="item-grid"></Card>
-        <Card className="item-grid"></Card>
-        <Card className="item-grid"></Card>
-        <Card className="item-grid"></Card>
+        {itens.map((item) => (
+          <Card className="item-grid" onClick={handleClick}>
+            <img src={item[imagem]} className="imagem" />
+            <label className="info-principal">{item[nome]}</label>
+            {descricao ? (
+              <label className="info">{item[descricao]}</label>
+            ) : null}
+          </Card>
+        ))}
       </section>
     </div>
   );
