@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
-import { Button, Card } from "@material-ui/core";
-import Divider from '@material-ui/core/Divider';
-
+import { Button, Paper } from "@material-ui/core";
+import Divider from "@material-ui/core/Divider";
+import { useGlobalState } from "../../hooks/globalState";
+import ItensGrid from "../ItensGrid";
+import ItensList from "../ItensList";
 import "./style.css";
 
-export default function BotoesBarra({item}) {
-    
-
+export default function BotoesBarra({ item }) {
+  const { setSelectedCategory, setComponent } = useGlobalState();
   return (
-    <Card id="botoes_barra"><p>{item}</p> <Divider id="divider"/></Card>
-    
-  )}
+    <Paper
+      elevation={0}
+      className="botoes_barra"
+      onClick={(e) => {
+        item === "Músicas"
+          ? setComponent(<ItensList />)
+          : setComponent(<ItensGrid />);
+        setSelectedCategory(item);
+      }}
+    >
+      {item}
+    </Paper>
+  );
+}

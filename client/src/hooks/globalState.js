@@ -1,16 +1,22 @@
 import React, { useContext, useState, createContext } from "react";
-
+import ItensGrid from "../components/ItensGrid";
 const GlobalStateContext = createContext({});
 
 export default function GlobalStateProvider({ children }) {
   //declare variables
+  const [selectedCategory, setSelectedCategory] = useState("Playlists");
+  const [selectedItem, setSelectedItem] = useState();
+  const [component, setComponent] = useState(<ItensGrid />);
   return (
     <GlobalStateContext.Provider
-      value={
-        {
-          //return variables
-        }
-      }
+      value={{
+        selectedCategory,
+        setSelectedCategory,
+        selectedItem,
+        setSelectedItem,
+        component,
+        setComponent,
+      }}
     >
       {children}
     </GlobalStateContext.Provider>

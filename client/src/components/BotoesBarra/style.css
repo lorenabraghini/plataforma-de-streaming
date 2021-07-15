@@ -1,21 +1,25 @@
-#botoes_barra{
-height: 50px;
-font-family: "Josefin Slab";
-background-color: #1e0f24;
-color: white;
-border: none;
+#barra_lateral .botoes_barra {
+  height: 70px;
+  font-family: "Josefin Slab";
+  background-color: #1e0f24;
+  color: white;
+  border: none;
+}
+#barra_lateral .botoes_barra:hover {
+  background-color: #331343;
+}
+#barra_lateral .botoes_barra + .botoes_barra {
+  border-top: 1px solid white;
+  /* margin-bottom: 20px; */
+}
 
-}
-#botoes_barra + #botoes_barra{
-    margin-top: 20px;
-}
-#divider{
-    background-color:white;
-    margin-top: 30px;
+#barra_lateral .botoes_barra {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
 }
 
-#botoes_barra p{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+#barra_lateral .botoes_barra:hover {
+  cursor: pointer;
 }

@@ -18,6 +18,7 @@
   flex-direction: column;
   margin-left: 452px;
   background-color: #1e0f24;
+  opacity: 80%;
 }
 
 #login div {
@@ -37,4 +38,9 @@
 
 #loginbtn {
   margin-top: 60px;
+}
+#loginbtn .MuiButtonBase-root:hover {
+  opacity: 100%;
+  background-color: grey;
+  color: white;
 }

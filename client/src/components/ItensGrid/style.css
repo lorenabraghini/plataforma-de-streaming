@@ -1,0 +1,22 @@
+#grid {
+  padding: 0rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 2rem;
+  margin-top: 40px;
+  margin-left: 80px;
+  height: 65vh;
+  overflow-y: auto;
+}
+
+.item-grid {
+  width: 200px;
+  height: 250px;
+  background-color: black;
+  opacity: 30%;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  background-color: transparent;
+}
