@@ -26,3 +26,9 @@
   width: 200px;
   margin-left: 100px;
 }
+
+#playbtn {
+  margin-top: 10px;
+  margin-left: 20px;
+  cursor: pointer;
+}

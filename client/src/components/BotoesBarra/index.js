@@ -18,8 +18,6 @@ export default function BotoesBarra({ item }) {
     Álbuns: <Albuns />,
     Artistas: <Artistas />,
     Músicas: <Musicas />,
-    Podcasts: <Podcasts />,
-    Configurações: <ItensList />,
   };
   return (
     <Paper

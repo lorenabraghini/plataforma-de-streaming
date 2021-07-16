@@ -17,6 +17,9 @@ export default function GlobalStateProvider({ children }) {
   const [episodios, setEpisodios] = useState([]);
   const [component, setComponent] = useState(<Playlists />);
   const [search, setSearch] = useState("");
+  const [url, setUrl] = useState("");
+  const [playingSong, setPlayingSong] = useState(false);
+
   return (
     <GlobalStateContext.Provider
       value={{
@@ -46,6 +49,10 @@ export default function GlobalStateProvider({ children }) {
         setSearch,
         musicasFiltradas,
         setMusicasFiltradas,
+        url,
+        setUrl,
+        playingSong,
+        setPlayingSong,
       }}
     >
       {children}

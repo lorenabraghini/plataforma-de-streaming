@@ -3,8 +3,9 @@ import Header from "../../components/Header";
 import { Card } from "@material-ui/core";
 import BotoesBarra from "../../components/BotoesBarra";
 import ItensGrid from "../../components/ItensGrid";
-import ItensList from "../../components/ItensList";
+import Artista from "../../components/Artista";
 import { useGlobalState } from "../../hooks/globalState";
+import ReactPlayer from "react-player";
 import "./style.css";
 import api from "../../services/api";
 
@@ -19,16 +20,11 @@ export default function Dashboard() {
     setAlbuns,
     setPodcasts,
     setEpisodios,
+    url,
+    playingSong,
   } = useGlobalState();
 
-  const itens = [
-    "Playlists",
-    "Álbuns",
-    "Artistas",
-    "Músicas",
-    "Podcasts",
-    "Configurações",
-  ];
+  const itens = ["Playlists", "Álbuns", "Artistas", "Músicas"];
 
   useEffect(() => {
     api.get("/getPlaylists").then((response) => {
@@ -69,6 +65,9 @@ export default function Dashboard() {
           ))}
         </Card>
         {component}
+      </div>
+      <div hidden>
+        <ReactPlayer url={url} playing={playingSong} />
       </div>
     </div>
   );

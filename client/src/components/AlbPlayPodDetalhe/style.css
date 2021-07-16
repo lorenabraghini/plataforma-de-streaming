@@ -1,0 +1,27 @@
+#album-infos {
+  display: flex;
+  margin-left: 110px;
+  margin-top: 20px;
+}
+
+#album-infos img {
+  max-width: 250px;
+}
+#album-infos div {
+  margin-left: 30px;
+  margin-top: 60px;
+}
+
+#album-infos div label {
+  color: white;
+  font-size: 60px;
+  margin-bottom: 100px;
+}
+#descricao {
+  font-size: 40px;
+}
+#album-infos p {
+  color: white;
+  font-size: 20px;
+  cursor: default;
+}
