@@ -1,0 +1,28 @@
+.musica-nome {
+  margin-right: 10px;
+}
+
+.item-list label {
+  font-size: 16px;
+}
+
+#musica-infos {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2px;
+  width: 350px;
+  margin-left: 40px;
+}
+
+#index,
+#info-duracao {
+  margin-top: 12px;
+}
+
+.item-list .album {
+  margin-left: 30px;
+}
+#info-duracao {
+  width: 200px;
+  margin-left: 100px;
+}

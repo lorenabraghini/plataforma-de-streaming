@@ -9,7 +9,18 @@ import "./style.css";
 import api from "../../services/api";
 
 export default function Dashboard() {
-  const { component, setItens } = useGlobalState();
+  const {
+    component,
+    setItens,
+    setMusicas,
+    setMusicasFiltradas,
+    setPlaylists,
+    setArtistas,
+    setAlbuns,
+    setPodcasts,
+    setEpisodios,
+  } = useGlobalState();
+
   const itens = [
     "Playlists",
     "Álbuns",
@@ -20,9 +31,31 @@ export default function Dashboard() {
   ];
 
   useEffect(() => {
+    api.get("/getPlaylists").then((response) => {
+      setItens(response.data.playlists);
+      setPlaylists(response.data.playlists);
+      console.log(response.data.playlists);
+    });
     api.get("/getAlbuns").then((response) => {
-      setItens(response.data.albuns);
+      setAlbuns(response.data.albuns);
       console.log(response.data.albuns);
+    });
+    api.get("/getMusic").then((response) => {
+      setMusicas(response.data.musicas);
+      setMusicasFiltradas(response.data.musicas);
+      console.log(response.data.musicas);
+    });
+    api.get("/getArtists").then((response) => {
+      setArtistas(response.data.artistas);
+      console.log(response.data.artistas);
+    });
+    api.get("/getPodcasts").then((response) => {
+      setPodcasts(response.data.podcasts);
+      console.log(response.data.podcasts);
+    });
+    api.get("/getEpisodes").then((response) => {
+      setEpisodios(response.data.episodios);
+      console.log(response.data.episodios);
     });
   }, []);
 

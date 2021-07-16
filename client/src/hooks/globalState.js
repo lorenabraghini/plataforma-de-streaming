@@ -1,5 +1,5 @@
 import React, { useContext, useState, createContext } from "react";
-import ItensGrid from "../components/ItensGrid";
+import Playlists from "../components/Playlists";
 const GlobalStateContext = createContext({});
 
 export default function GlobalStateProvider({ children }) {
@@ -7,6 +7,7 @@ export default function GlobalStateProvider({ children }) {
   const [selectedCategory, setSelectedCategory] = useState("Playlists");
   const [selectedItem, setSelectedItem] = useState();
   const [musicas, setMusicas] = useState([]);
+  const [musicasFiltradas, setMusicasFiltradas] = useState([]);
   const [playlists, setPlaylists] = useState([]);
   const [artistas, setArtistas] = useState([]);
   const [users, setUsers] = useState([]);
@@ -14,11 +15,8 @@ export default function GlobalStateProvider({ children }) {
   const [itens, setItens] = useState([]);
   const [podcasts, setPodcasts] = useState([]);
   const [episodios, setEpisodios] = useState([]);
-  const [nome, setNome] = useState("nome");
-  const [descricao, setDescricao] = useState("descricao");
-  const [component, setComponent] = useState(
-    <ItensGrid nome="nome" descricao={null} imagem="imagem" />
-  );
+  const [component, setComponent] = useState(<Playlists />);
+  const [search, setSearch] = useState("");
   return (
     <GlobalStateContext.Provider
       value={{
@@ -44,10 +42,10 @@ export default function GlobalStateProvider({ children }) {
         setEpisodios,
         itens,
         setItens,
-        nome,
-        setNome,
-        descricao,
-        setDescricao,
+        search,
+        setSearch,
+        musicasFiltradas,
+        setMusicasFiltradas,
       }}
     >
       {children}
