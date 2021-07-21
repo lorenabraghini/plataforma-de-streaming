@@ -19,17 +19,16 @@
 }
 
 .item-list {
-  /* width: 200px; */
   height: 50px;
   background-color: black;
   opacity: 60%;
   display: flex;
-  /* justify-content: space-between; */
   padding-left: 15px;
   padding-right: 15px;
 }
 
-.item-list:hover {
+.musica-artista:hover {
+  text-decoration: underline;
   cursor: pointer;
 }
 

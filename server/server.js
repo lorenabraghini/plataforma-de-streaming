@@ -10,6 +10,7 @@ const getUsersRoutes = require("./routes/getUsers-route");
 const getAlbunsRoutes = require("./routes/getAlbuns-route");
 const getPodcastsRoutes = require("./routes/getPodcasts-route");
 const getEpisodesRoutes = require("./routes/getEpisodes-route");
+const getUserRoutes = require("./routes/getUser-route");
 const app = express();
 const server = http.createServer(app);
 
@@ -26,6 +27,7 @@ app.use("/getUsers", getUsersRoutes);
 app.use("/getAlbuns", getAlbunsRoutes);
 app.use("/getPodcasts", getPodcastsRoutes);
 app.use("/getEpisodes", getEpisodesRoutes);
+app.use("/getUser", getUserRoutes);
 
 // app.use(express.static(path.join(__dirname, "..", "client", "build")));
 app.use(express.static(path.join(__dirname, "../public", "index.html")));

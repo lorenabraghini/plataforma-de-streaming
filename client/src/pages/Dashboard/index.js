@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import { Card } from "@material-ui/core";
 import BotoesBarra from "../../components/BotoesBarra";
-import ItensGrid from "../../components/ItensGrid";
-import ItensList from "../../components/ItensList";
+import Player from "../../components/Player";
 import { useGlobalState } from "../../hooks/globalState";
 import "./style.css";
 import api from "../../services/api";
@@ -17,27 +16,25 @@ export default function Dashboard() {
     setPlaylists,
     setArtistas,
     setAlbuns,
+    setPlaylistsFiltradas,
+    setArtistasFiltrados,
+    setAlbunsFiltrados,
     setPodcasts,
     setEpisodios,
   } = useGlobalState();
 
-  const itens = [
-    "Playlists",
-    "Álbuns",
-    "Artistas",
-    "Músicas",
-    "Podcasts",
-    "Configurações",
-  ];
+  const itens = ["Playlists", "Álbuns", "Artistas", "Músicas"];
 
   useEffect(() => {
     api.get("/getPlaylists").then((response) => {
       setItens(response.data.playlists);
       setPlaylists(response.data.playlists);
+      setPlaylistsFiltradas(response.data.playlists);
       console.log(response.data.playlists);
     });
     api.get("/getAlbuns").then((response) => {
       setAlbuns(response.data.albuns);
+      setAlbunsFiltrados(response.data.albuns);
       console.log(response.data.albuns);
     });
     api.get("/getMusic").then((response) => {
@@ -47,6 +44,7 @@ export default function Dashboard() {
     });
     api.get("/getArtists").then((response) => {
       setArtistas(response.data.artistas);
+      setArtistasFiltrados(response.data.artistas);
       console.log(response.data.artistas);
     });
     api.get("/getPodcasts").then((response) => {
@@ -67,6 +65,7 @@ export default function Dashboard() {
           {itens.map((item) => (
             <BotoesBarra item={item} />
           ))}
+          <Player />
         </Card>
         {component}
       </div>

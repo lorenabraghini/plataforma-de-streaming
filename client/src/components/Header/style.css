@@ -1,7 +1,7 @@
 header {
   height: 8vh;
   box-shadow: 0.1em 0.1em 0.05em #1e0f24;
-  padding-left: 60px;
+  /* padding-left: 60px; */
 }
 
 #header {
@@ -13,11 +13,12 @@ header {
 }
 
 #header h1 {
-  font-family: "Cinzel";
+  font-family: "Vollkorn";
   color: white;
   font-size: 50px;
   padding-top: 10px;
   cursor: default;
+  margin-left: 60px;
 }
 
 #avatar {
@@ -37,6 +38,15 @@ header {
   margin-left: 10px;
   margin-top: 3px;
   width: 20px;
+}
+
+.search .close-icon {
+  margin-right: 10px;
+  margin-top: 3px;
+  width: 20px;
+}
+.search .close-icon:hover {
+  cursor: pointer;
 }
 .search input {
   width: 500px;

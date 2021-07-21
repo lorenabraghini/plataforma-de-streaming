@@ -24,8 +24,11 @@
 }
 
 .item-grid .imagem {
-  max-height: 200px;
+  height: 200px;
   padding: 10px;
+}
+.item-grid:hover {
+  background-color: #cfcbd1;
 }
 
 .item-grid .info-principal {
@@ -38,4 +41,9 @@
   padding-left: 12px;
   font-size: 15px;
   margin-top: 10px;
+}
+.item-grid .info:hover {
+  text-decoration: underline;
+
+  cursor: pointer;
 }
