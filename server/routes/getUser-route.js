@@ -4,6 +4,6 @@ const { index } = require("../useCases/getUserManagement/getUserController");
 const router = express.Router();
 
 // define routes
-router.get("/", index);
+router.post("/", index);
 
 module.exports = router;
