@@ -65,7 +65,7 @@ function getUser(user) {
       const db = await sql.connect(sqlConfig);
       const res = await db
         .request()
-        .query(`SELECT * FROM Usuario WHERE id=${user}`);
+        .query(`SELECT * FROM Usuario WHERE id='${user}'`);
       console.log(res.recordset);
       resolve(res.recordset);
     } catch (error) {
