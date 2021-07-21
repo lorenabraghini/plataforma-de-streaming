@@ -19,6 +19,7 @@ export default function Header() {
     setAlbunsFiltrados,
     artistas,
     setArtistasFiltrados,
+    usuario,
   } = useGlobalState();
 
   useEffect(() => {
@@ -64,11 +65,7 @@ export default function Header() {
             <Close />
           </div>
         </Card>
-        <Avatar
-          id="avatar"
-          alt="Remy Sharp"
-          src="/static/images/avatar/1.jpg"
-        />
+        <Avatar id="avatar" alt="Remy Sharp" src={usuario.imagem} />
       </header>
     </div>
   );

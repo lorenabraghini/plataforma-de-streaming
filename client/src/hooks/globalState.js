@@ -13,7 +13,6 @@ export default function GlobalStateProvider({ children }) {
   const [artistasFiltrados, setArtistasFiltrados] = useState([]);
   const [playlists, setPlaylists] = useState([]);
   const [artistas, setArtistas] = useState([]);
-  const [users, setUsers] = useState([]);
   const [albuns, setAlbuns] = useState([]);
   const [itens, setItens] = useState([]);
   const [podcasts, setPodcasts] = useState([]);
@@ -23,6 +22,7 @@ export default function GlobalStateProvider({ children }) {
   const [url, setUrl] = useState("");
   const [playingSong, setPlayingSong] = useState(false);
   const [currentSong, setCurrentSong] = useState(null);
+  const [usuario, setUsuario] = useState("usuário");
 
   return (
     <GlobalStateContext.Provider
@@ -39,8 +39,6 @@ export default function GlobalStateProvider({ children }) {
         setPlaylists,
         artistas,
         setArtistas,
-        users,
-        setUsers,
         albuns,
         setAlbuns,
         podcasts,
@@ -65,6 +63,8 @@ export default function GlobalStateProvider({ children }) {
         setArtistasFiltrados,
         currentSong,
         setCurrentSong,
+        usuario,
+        setUsuario,
       }}
     >
       {children}

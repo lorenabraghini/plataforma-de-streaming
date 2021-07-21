@@ -8,8 +8,8 @@ export default function Routes() {
     <BrowserRouter>
       <GlobalStateProvider>
         <Switch>
-          <Route exact path="/" component={Dashboard} />
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/" component={Login} />
         </Switch>
       </GlobalStateProvider>
     </BrowserRouter>
