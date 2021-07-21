@@ -4,18 +4,18 @@ const { inserir } = require("./server/common/Database/helpers");
 
 const spotifyApi = new SpotifyWebApi();
 spotifyApi.setAccessToken(
-  "BQAi_HqptysHRfc8n0ac9Fh2CvwOuaTBL3genGwmcNxGBiWV3GBWU6xQXB7hLYbZJDY2cZJef4oDCrVWJRyrY6_cMJKfxszrbyA4IMeIeGKbI67R_YgUlf192PS5DZ8u2M-0TH_VmyNnkvmJCnOTGLlYl5AmMitDiazsWQ50po1Ex_uUE6mDvCQmuGMBllVQ0Zbd5MNS9BmLXnfrA5Vc6d28Qxfcr75v3pkzqtxCRaN6t4IO--z6sHWgBoL1PvddLbx4EY-ZZFmkh1x5zAAMdibc9WJjJ-s"
+  "BQDIyZR7tDz6jQk-izU5mJLxTDAyMi_ty9H_Tm1rE2ghY8HfmsBxm0o7WiFJ43jYQYoagvj-h0G1G1IjXcPrUjyyK7M00dPozFAr5wSyJgjvoi4kaRxMB9CeWhQVaaJ9UaMYCXH0C8KrjnIDaZ5aSAh6DsvUtZfDWHqNlLXvaq8nvAeW1nFyKfhskseMgKeWxjeadGm2hN5OxzxFuVuWBiF_Y89HOzrOFtA41_KWA-nyAjk1Xz8nnLDhu7YwTXzyzWEqVD2DCWl99i7ffKK98JpCIjHBvg"
 );
 
 async function getPodcasts() {
   let shows = await spotifyApi.getMySavedShows();
   for (let showInfo of shows.body.items) {
     let pod = savePodcast(showInfo);
-    inserir("Podcast", pod).catch((e) => console.log("DUPLICADO"));
+    inserir("Podcast", pod).catch((e) => console.log(e));
     showInfo = await spotifyApi.getShow(showInfo.show.id);
     for (let episode of showInfo.body.episodes.items) {
-      let ep = saveEpisode(episode, showInfo.show.name);
-      inserir("EpisodioPodcast", ep).catch((e) => console.log("DUPLICADO"));
+      let ep = saveEpisode(episode, pod.name);
+      inserir("EpisodioPodcast", ep).catch((e) => console.log(e));
     }
   }
 }
@@ -45,8 +45,8 @@ function savePodcast(showInfo) {
 }
 
 async function main() {
-  await getData("12177373955");
-  await getData("lorenabraghinim");
+  //await getData("12177373955");
+  //await getData("lorenabraghinim");
   await getData("beatrizgnovais");
 }
 
@@ -56,22 +56,22 @@ async function getData(user) {
     let play = savePlaylist(playlist);
     console.log(play.name);
     inserir("Playlist", play).catch((e) => console.log("DUPLICADO"));
-    const tracks = await spotifyApi.getPlaylistTracks(playlist.id);
-    for (let track of tracks.body.items) {
-      const album = await spotifyApi.getAlbum(track.track.album.id);
-      let tr = saveTrack(track, album);
-      console.log(tr.nome);
-      inserir("Musica", tr).catch((e) => console.log("DUPLICADO"));
-      let al = saveAlbum(album);
-      console.log(al.name);
-      inserir("Album", al).catch((e) => console.log("DUPLICADO"));
-      for (let artist of album.body.artists) {
-        let artistInfos = await spotifyApi.getArtist(artist.id);
-        let art = saveArtist(artistInfos);
-        console.log(art.nome);
-        inserir("Artista", art).catch((e) => console.log("DUPLICADO"));
-      }
-    }
+    // const tracks = await spotifyApi.getPlaylistTracks(playlist.id);
+    // for (let track of tracks.body.items) {
+    //   const album = await spotifyApi.getAlbum(track.track.album.id);
+    //   let tr = saveTrack(track, album);
+    //   console.log(tr.nome);
+    //   inserir("Musica", tr).catch((e) => console.log("DUPLICADO"));
+    //   let al = saveAlbum(album);
+    //   console.log(al.name);
+    //   inserir("Album", al).catch((e) => console.log("DUPLICADO"));
+    //   for (let artist of album.body.artists) {
+    //     let artistInfos = await spotifyApi.getArtist(artist.id);
+    //     let art = saveArtist(artistInfos);
+    //     console.log(art.nome);
+    //     inserir("Artista", art).catch((e) => console.log("DUPLICADO"));
+    //   }
+    // }
   }
 }
 

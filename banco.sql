@@ -15,6 +15,9 @@ CREATE TABLE Playlist
     nome varchar(100) PRIMARY KEY,
     descricao varchar(200),
     autor varchar(200) REFERENCES Usuario (id),
+    -- qtd_musicas INTEGER,
+    -- visibilidade VARCHAR(20),
+    imagem varchar(200)
 );
 
 CREATE TABLE Artista
@@ -34,7 +37,9 @@ CREATE TABLE Musica
     url varchar(200),
     duracao integer,
     popularidade integer,
-    genero varchar(20)
+    genero varchar(20),
+    nomeArtista varchar(100),
+    nomeAlbum varchar (100)
 );
 
 CREATE TABLE Album
@@ -43,14 +48,15 @@ CREATE TABLE Album
     dataPublicacao date,
     qtdMusicas integer,
     genero varchar(20),
-    imagem varchar(200)
+    imagem varchar(200),
+    nomeArtista varchar(100),
 );
 
 
 CREATE TABLE Podcast
 (
     nome varchar(100) PRIMARY KEY,
-    descricao varchar(200),
+    descricao varchar(MAX),
     genero varchar(20),
     imagem varchar(200),
     idioma varchar(50),
@@ -62,51 +68,20 @@ CREATE TABLE EpisodioPodcast
     idEpPodcast varchar(200) PRIMARY KEY,
     nome varchar(100),
     dataPublicacao date,
-    descricao varchar(200),
+    descricao varchar(MAX),
     url varchar(200),
     duracao integer,
+    nomePodcast varchar (100)
 );
 
-CREATE TABLE PodcastPossui
-(
-    nomePodcast varchar(100) PRIMARY KEY REFERENCES Podcast (nome),
-    idEpPodcast varchar(200) REFERENCES EpisodioPodcast (idEpPodcast)
-);
+CREATE TABLE Playlist_Musica
+  (
+	nomePlaylist varchar(100)  References Playlist (nome),
+	nomeMusica varchar(200) References [dbo].[Musica] (idMusica),
+  );
 
-CREATE TABLE PossuiPlaylist
-(
-    nomePlaylist varchar(100) PRIMARY KEY REFERENCES Playlist (nome),
-    idMusica varchar(200) REFERENCES Musica (idMusica),
-    idArtista varchar(200) REFERENCES Artista (id)
-);
-
-CREATE TABLE ArtistaCompoe
-(
-    idArtista varchar(200) PRIMARY KEY REFERENCES Artista (id),
-    nomeAlbum varchar(100) REFERENCES Album (nome)
-);
-
-CREATE TABLE PertenceAlbum
-(
-    nomeAlbum varchar(100) PRIMARY KEY REFERENCES Album (nome),
-    idMusica varchar(200) REFERENCES Musica (idMusica)
-);
-
-CREATE TABLE UsuarioSegue
-(
-    idUsuarioSeguidor varchar(200) PRIMARY KEY REFERENCES Usuario (id),
-    idUsuarioSeguindo varchar(200) REFERENCES Usuario (id),
-    idArtista varchar(200) REFERENCES Artista (id)
-);
-
-CREATE TABLE ArtistaPerforma
-(
-    idArtista varchar(200) PRIMARY KEY REFERENCES Artista (id),
-    idMusica varchar(200) REFERENCES Musica (idMusica)
-);
-
-CREATE TABLE PlaylistContem
-(
-    nomePlaylist varchar(100) PRIMARY KEY REFERENCES Playlist (nome),
-    idMusica varchar(200) REFERENCES Musica (idMusica)
-);
+create table #temp(
+autor varchar(100),
+nomePlaylist varchar(100),
+nomeMusica varchar (100)
+)
