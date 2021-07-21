@@ -4,6 +4,7 @@ import { Card } from "@material-ui/core";
 import BotoesBarra from "../../components/BotoesBarra";
 import Player from "../../components/Player";
 import { useGlobalState } from "../../hooks/globalState";
+import { useHistory } from "react-router-dom";
 import "./style.css";
 import api from "../../services/api";
 
@@ -21,9 +22,15 @@ export default function Dashboard() {
     setAlbunsFiltrados,
     setPodcasts,
     setEpisodios,
+    usuario,
   } = useGlobalState();
 
-  const itens = ["Playlists", "Álbuns", "Artistas", "Músicas"];
+  let history = useHistory();
+  const itens = ["Playlists 2Hear", "Álbuns", "Artistas", "Músicas"];
+
+  useEffect(() => {
+    if (!usuario) history.push("/");
+  }, []);
 
   useEffect(() => {
     api.get("/getPlaylists").then((response) => {

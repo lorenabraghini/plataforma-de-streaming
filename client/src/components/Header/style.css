@@ -1,7 +1,6 @@
 header {
   height: 8vh;
   box-shadow: 0.1em 0.1em 0.05em #1e0f24;
-  /* padding-left: 60px; */
 }
 
 #header {
@@ -53,5 +52,42 @@ header {
   background-color: transparent;
   border: none;
   margin-left: 10px;
-  /* padding: 10px; */
+}
+#avatar:hover {
+  cursor: pointer;
+}
+#configuracoes {
+  position: absolute;
+  width: 250px;
+  height: 120px;
+  left: 1174px;
+  background-color: #1e0f24;
+  opacity: 80%;
+}
+
+#configuracoes .user {
+  padding-top: 20px;
+  margin-left: 10px;
+  font-size: 25px;
+  color: white;
+}
+
+#configuracoes .logout {
+  margin-left: 10px;
+  font-size: 16px;
+  color: white;
+}
+#configuracoes .logout:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+#configuracoes .playlists {
+  margin-top: 10px;
+  margin-left: 10px;
+  font-size: 16px;
+  color: white;
+}
+#configuracoes .playlists:hover {
+  text-decoration: underline;
+  cursor: pointer;
 }

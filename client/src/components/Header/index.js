@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useGlobalState } from "../../hooks/globalState";
 import Avatar from "@material-ui/core/Avatar";
 import { Card } from "@material-ui/core";
-
+import { useHistory } from "react-router-dom";
 import { Search, Close } from "@material-ui/icons";
-
+import MinhasPlaylists from "../MinhasPlaylists";
 import "./style.css";
 
 export default function Header() {
@@ -20,8 +20,12 @@ export default function Header() {
     artistas,
     setArtistasFiltrados,
     usuario,
+    setUsuario,
+    setComponent,
   } = useGlobalState();
 
+  let history = useHistory();
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     if (search !== "") {
       const filteredSongs = musicas.filter(
@@ -65,8 +69,36 @@ export default function Header() {
             <Close />
           </div>
         </Card>
-        <Avatar id="avatar" alt="Remy Sharp" src={usuario.imagem} />
+        <Avatar
+          id="avatar"
+          alt={usuario?.nome}
+          src={usuario?.imagem}
+          onClick={(e) => setOpen(!open)}
+        />
       </header>
+      {open ? (
+        <div id="configuracoes">
+          <p className="user">{usuario.nome}</p>
+          <p
+            className="playlists"
+            onClick={(e) => {
+              setComponent(<MinhasPlaylists />);
+              setOpen(!open);
+            }}
+          >
+            Playlists
+          </p>
+          <p
+            className="logout"
+            onClick={(e) => {
+              history.push("/");
+              setUsuario(null);
+            }}
+          >
+            Logout
+          </p>
+        </div>
+      ) : null}
     </div>
   );
 }

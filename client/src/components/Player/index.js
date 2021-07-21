@@ -51,17 +51,20 @@ export default function Player() {
           <div id="labels">
             <label>{currentSong.nome}</label>
             <label
+              className="artista"
               onClick={(e) => {
                 const artista = artistas.filter(
                   (artista) => artista.nome === currentSong.nomeArtista
                 )[0];
-                return setComponent(
-                  <Artista
-                    nomeArtista={artista.nome}
-                    imagem={artista.imagem}
-                    popularidade={artista.ouvintesMensais}
-                  />
-                );
+                return artista
+                  ? setComponent(
+                      <Artista
+                        nomeArtista={artista.nome}
+                        imagem={artista.imagem}
+                        popularidade={artista.ouvintesMensais}
+                      />
+                    )
+                  : null;
               }}
             >
               {currentSong.nomeArtista}

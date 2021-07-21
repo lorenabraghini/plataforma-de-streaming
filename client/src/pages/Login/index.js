@@ -15,7 +15,7 @@ export default function Login() {
   const [encryptedText, setEncryptedText] = useState("senha");
   function handleClick() {
     api.post("/getUser", { user }).then((result) => {
-      setUsuario(result.user);
+      setUsuario(result.data.user);
       history.push("/dashboard");
     });
   }

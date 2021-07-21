@@ -8,13 +8,14 @@ import Musicas from "../Musicas";
 import Artistas from "../Artistas";
 import Albuns from "../Albuns";
 import Podcasts from "../Podcasts";
+
 import "./style.css";
 
 export default function BotoesBarra({ item }) {
   const { setComponent } = useGlobalState();
 
   const itens = {
-    Playlists: <Playlists />,
+    "Playlists 2Hear": <Playlists />,
     Álbuns: <Albuns />,
     Artistas: <Artistas />,
     Músicas: <Musicas />,

@@ -14,6 +14,10 @@
   flex-direction: column;
   padding: 10px;
 }
+#currentSong #labels .artista:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
 
 #currentSong #controls {
   display: flex;

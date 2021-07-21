@@ -31,15 +31,14 @@ app.use("/getPodcasts", getPodcastsRoutes);
 app.use("/getEpisodes", getEpisodesRoutes);
 app.use("/getUser", getUserRoutes);
 
-// app.use(express.static(path.join(__dirname, "..", "client", "build")));
+app.use(express.static(path.join(__dirname, "..", "client", "build")));
 app.use(express.static(path.join(__dirname, "../public", "index.html")));
 
 // default path to serve up index.html (single page application)
 app.use("", (req, res) => {
   res
     .status(200)
-    // .sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
-    .sendFile(path.join(__dirname, "../public", "index.html"));
+    .sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
 });
 
 // start node server

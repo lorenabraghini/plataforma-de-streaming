@@ -22,7 +22,7 @@ export default function GlobalStateProvider({ children }) {
   const [url, setUrl] = useState("");
   const [playingSong, setPlayingSong] = useState(false);
   const [currentSong, setCurrentSong] = useState(null);
-  const [usuario, setUsuario] = useState("usuário");
+  const [usuario, setUsuario] = useState(null);
 
   return (
     <GlobalStateContext.Provider
