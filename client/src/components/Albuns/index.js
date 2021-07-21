@@ -6,7 +6,7 @@ import Artista from "../Artista";
 import "./style.css";
 
 export default function Albuns() {
-  const { albuns, setComponent, musicas, artistas } = useGlobalState();
+  const { albunsFiltrados, setComponent, musicas, artistas } = useGlobalState();
   function handleClick(album) {
     console.log(album);
     const itens = musicas.filter((musica) => musica.nomeAlbum === album.nome);
@@ -27,7 +27,7 @@ export default function Albuns() {
     <div>
       <h1>Albuns</h1>
       <section id="grid">
-        {albuns.map((album) => (
+        {albunsFiltrados.map((album) => (
           <Card className="item-grid">
             <img
               src={album.imagem}

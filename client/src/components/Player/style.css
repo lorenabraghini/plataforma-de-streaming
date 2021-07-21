@@ -1,0 +1,35 @@
+#currentSongImg {
+  width: 100%;
+  height: 250px;
+  padding: 10px;
+}
+
+#currentSong div label {
+  color: white;
+  font-size: 16px;
+}
+
+#currentSong #labels {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+#currentSong #controls {
+  display: flex;
+  flex-direction: row;
+  margin-left: 66px;
+}
+
+#currentSong #controls .MuiSvgIcon-colorAction {
+  color: white;
+}
+
+#currentSong #controls div:hover {
+  cursor: pointer;
+}
+
+#currentSong .MuiSvgIcon-colorAction,
+#currentSong .MuiSlider-colorPrimary {
+  color: white;
+}

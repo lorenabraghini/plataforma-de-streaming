@@ -5,7 +5,7 @@ import Artista from "../Artista";
 import "./style.css";
 
 export default function Artistas() {
-  const { artistas, setComponent } = useGlobalState();
+  const { artistasFiltrados, setComponent } = useGlobalState();
   function handleClick(artista) {
     setComponent(
       <Artista
@@ -19,7 +19,7 @@ export default function Artistas() {
     <div>
       <h1>Artistas</h1>
       <section id="grid">
-        {artistas.map((artista) => (
+        {artistasFiltrados.map((artista) => (
           <Card className="item-grid" onClick={(e) => handleClick(artista)}>
             <img src={artista.imagem} className="imagem" />
             <label className="info-principal">

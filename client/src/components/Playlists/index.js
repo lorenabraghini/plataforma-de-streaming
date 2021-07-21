@@ -5,7 +5,7 @@ import AlbPlayPodDetalhe from "../AlbPlayPodDetalhe";
 import "./style.css";
 
 export default function Playlists() {
-  const { playlists, setComponent, musicas } = useGlobalState();
+  const { playlistsFiltradas, setComponent, musicas } = useGlobalState();
   function handleClick(playlist) {
     const itens = musicas.slice(playlist.nome.length, playlist.nome.length * 2);
     setComponent(
@@ -26,7 +26,7 @@ export default function Playlists() {
     <div>
       <h1>Playlists</h1>
       <section id="grid">
-        {playlists.map((playlist) => (
+        {playlistsFiltradas.map((playlist) => (
           <Card className="item-grid" onClick={(e) => handleClick(playlist)}>
             <img src={playlist.imagem} className="imagem" />
             <label className="info-principal">

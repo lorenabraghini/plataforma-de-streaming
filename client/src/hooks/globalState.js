@@ -8,6 +8,9 @@ export default function GlobalStateProvider({ children }) {
   const [selectedItem, setSelectedItem] = useState();
   const [musicas, setMusicas] = useState([]);
   const [musicasFiltradas, setMusicasFiltradas] = useState([]);
+  const [playlistsFiltradas, setPlaylistsFiltradas] = useState([]);
+  const [albunsFiltrados, setAlbunsFiltrados] = useState([]);
+  const [artistasFiltrados, setArtistasFiltrados] = useState([]);
   const [playlists, setPlaylists] = useState([]);
   const [artistas, setArtistas] = useState([]);
   const [users, setUsers] = useState([]);
@@ -19,6 +22,7 @@ export default function GlobalStateProvider({ children }) {
   const [search, setSearch] = useState("");
   const [url, setUrl] = useState("");
   const [playingSong, setPlayingSong] = useState(false);
+  const [currentSong, setCurrentSong] = useState(null);
 
   return (
     <GlobalStateContext.Provider
@@ -53,6 +57,14 @@ export default function GlobalStateProvider({ children }) {
         setUrl,
         playingSong,
         setPlayingSong,
+        playlistsFiltradas,
+        setPlaylistsFiltradas,
+        albunsFiltrados,
+        setAlbunsFiltrados,
+        artistasFiltrados,
+        setArtistasFiltrados,
+        currentSong,
+        setCurrentSong,
       }}
     >
       {children}

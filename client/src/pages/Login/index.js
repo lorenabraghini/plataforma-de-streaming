@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useGlobalState } from "../../hooks/globalState";
 import { Button, Card } from "@material-ui/core";
-import Header from "../../components/Header";
+import Header from "../../components/HeaderLogin";
 import api from "../../services/api";
 
 import "./style.css";
@@ -13,9 +13,7 @@ export default function Login() {
   useEffect(() => {}, []);
 
   return (
-    <div
-      id="content"
-    >
+    <div id="content">
       <Header />
       <Card id="login">
         <div>

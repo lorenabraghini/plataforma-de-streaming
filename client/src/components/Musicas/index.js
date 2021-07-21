@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Card } from "@material-ui/core";
+import React from "react";
+
 import { useGlobalState } from "../../hooks/globalState";
-import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
-import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 
 import Musica from "../Musica";
 import "./style.css";

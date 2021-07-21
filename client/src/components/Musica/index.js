@@ -3,11 +3,20 @@ import { Card } from "@material-ui/core";
 import { useGlobalState } from "../../hooks/globalState";
 import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
-import ReactPlayer from "react-player";
+import Artista from "../Artista";
+
 import "./style.css";
 
 export default function Musicas({ musica, index, showAlbum }) {
-  const { albuns, setUrl, setPlayingSong, playingSong } = useGlobalState();
+  const {
+    albuns,
+    setUrl,
+    setPlayingSong,
+    playingSong,
+    setComponent,
+    artistas,
+    setCurrentSong,
+  } = useGlobalState();
   const [playing, setPlaying] = useState(false);
   const album = albuns.filter((album) => album.nome === musica.nomeAlbum);
 
@@ -23,6 +32,7 @@ export default function Musicas({ musica, index, showAlbum }) {
     return minutes + ":" + seconds;
   }
   function handleClick(newUrl) {
+    setCurrentSong(musica);
     setUrl(newUrl);
     setPlaying(!playing);
     setPlayingSong(!playingSong);
@@ -46,7 +56,23 @@ export default function Musicas({ musica, index, showAlbum }) {
 
       <div id="musica-infos">
         <label className="musica-nome">{musica.nome}</label>
-        <label>{musica.nomeArtista}</label>
+        <label
+          className="musica-artista"
+          onClick={(e) => {
+            const artista = artistas.filter(
+              (artista) => artista.nome === musica.nomeArtista
+            )[0];
+            return setComponent(
+              <Artista
+                nomeArtista={artista.nome}
+                imagem={artista.imagem}
+                popularidade={artista.ouvintesMensais}
+              />
+            );
+          }}
+        >
+          {musica.nomeArtista}
+        </label>
       </div>
       {showAlbum ? (
         <label
