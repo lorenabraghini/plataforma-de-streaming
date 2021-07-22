@@ -11,17 +11,11 @@ import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import VolumeDown from "@material-ui/icons/VolumeDown";
 import VolumeUp from "@material-ui/icons/VolumeUp";
 
 import "./style.css";
-const useStyles = makeStyles({
-  root: {
-    width: 200,
-  },
-});
 
 export default function Player() {
   const {
@@ -42,7 +36,6 @@ export default function Player() {
     setVolume(newValue);
   };
 
-  const classes = useStyles();
   return (
     <div id="currentSong">
       {currentSong ? (
@@ -107,7 +100,12 @@ export default function Player() {
         </div>
       ) : null}
 
-      <ReactPlayer url={url} playing={playingSong} volume={volume} />
+      <ReactPlayer
+        url={url}
+        playing={playingSong}
+        volume={volume}
+        onEnded={(e) => setPlayingSong(false)}
+      />
     </div>
   );
 }
