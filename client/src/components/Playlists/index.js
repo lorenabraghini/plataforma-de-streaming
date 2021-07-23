@@ -7,7 +7,10 @@ import "./style.css";
 export default function Playlists() {
   const { playlistsFiltradas, setComponent, musicas } = useGlobalState();
   function handleClick(playlist) {
-    const itens = musicas.slice(playlist.nome.length, playlist.nome.length * 2);
+    const itens = musicas.filter((musica) =>
+      playlist.musicas.includes(musica.idMusica)
+    );
+
     setComponent(
       <AlbPlayPodDetalhe
         nome={playlist.nome}

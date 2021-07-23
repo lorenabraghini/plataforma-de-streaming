@@ -14,7 +14,6 @@ export default function AlbPlayPodDetalhe({
   showAlbum,
   descricao,
 }) {
-  console.log(itens);
   return (
     <div>
       <div id="album-infos">

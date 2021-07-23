@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Card } from "@material-ui/core";
 import { useGlobalState } from "../../hooks/globalState";
 import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
@@ -10,6 +10,7 @@ import "./style.css";
 export default function Musicas({ musica, index, showAlbum }) {
   const {
     albuns,
+    url,
     setUrl,
     setPlayingSong,
     playingSong,
@@ -17,7 +18,6 @@ export default function Musicas({ musica, index, showAlbum }) {
     artistas,
     setCurrentSong,
   } = useGlobalState();
-  const [playing, setPlaying] = useState(false);
   const album = albuns.filter((album) => album.nome === musica.nomeAlbum);
 
   function msToHMS(ms) {
@@ -32,16 +32,24 @@ export default function Musicas({ musica, index, showAlbum }) {
     return minutes + ":" + seconds;
   }
   function handleClick(newUrl) {
-    setCurrentSong(musica);
-    setUrl(newUrl);
-    setPlaying(!playing);
-    setPlayingSong(!playingSong);
+    if (newUrl !== url) {
+      setPlayingSong(false);
+      setUrl(newUrl);
+      setPlayingSong(true);
+      setCurrentSong(musica);
+    } else {
+      setPlayingSong(!playingSong);
+    }
   }
   return (
     <Card className="item-list">
       <label id="index">{index + 1}</label>
       <div id="playbtn" onClick={(e) => handleClick(musica.url)}>
-        {playing ? <PauseCircleOutlineIcon /> : <PlayCircleOutlineIcon />}
+        {playingSong && url === musica.url ? (
+          <PauseCircleOutlineIcon />
+        ) : (
+          <PlayCircleOutlineIcon />
+        )}
       </div>
       {showAlbum ? (
         <img

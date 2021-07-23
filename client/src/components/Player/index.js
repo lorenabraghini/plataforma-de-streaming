@@ -42,7 +42,11 @@ export default function Player() {
         <div>
           <img id="currentSongImg" src={album[0].imagem} />
           <div id="labels">
-            <label>{currentSong.nome}</label>
+            <label>
+              {currentSong.nome.length > 25
+                ? currentSong.nome.substring(0, 25) + "..."
+                : currentSong.nome}
+            </label>
             <label
               className="artista"
               onClick={(e) => {
@@ -78,7 +82,6 @@ export default function Player() {
               <SkipNextIcon color="action" fontSize="large" />
             </div>
           </div>
-
           <Grid container spacing={2}>
             <Grid item>
               <VolumeDown color="action" />
@@ -99,13 +102,14 @@ export default function Player() {
           </Grid>
         </div>
       ) : null}
-
-      <ReactPlayer
-        url={url}
-        playing={playingSong}
-        volume={volume}
-        onEnded={(e) => setPlayingSong(false)}
-      />
+      <div hidden>
+        <ReactPlayer
+          url={url}
+          playing={playingSong}
+          volume={volume}
+          onEnded={(e) => setPlayingSong(false)}
+        />
+      </div>
     </div>
   );
 }

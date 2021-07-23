@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useGlobalState } from "../../hooks/globalState";
 import Avatar from "@material-ui/core/Avatar";
 import { Card } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
 import { Search, Close } from "@material-ui/icons";
+import { useHistory } from "react-router-dom";
 import MinhasPlaylists from "../MinhasPlaylists";
 import "./style.css";
 

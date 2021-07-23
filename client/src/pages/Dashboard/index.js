@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Header from "../../components/Header";
 import { Card } from "@material-ui/core";
 import BotoesBarra from "../../components/BotoesBarra";
 import Player from "../../components/Player";
 import { useGlobalState } from "../../hooks/globalState";
 import { useHistory } from "react-router-dom";
+
 import "./style.css";
 import api from "../../services/api";
 
