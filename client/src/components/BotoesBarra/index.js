@@ -7,7 +7,6 @@ import Playlists from "../Playlists";
 import Musicas from "../Musicas";
 import Artistas from "../Artistas";
 import Albuns from "../Albuns";
-import Podcasts from "../Podcasts";
 
 import "./style.css";
 

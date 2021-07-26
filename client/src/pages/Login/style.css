@@ -13,7 +13,7 @@
 
 #login {
   width: 42vw;
-  height: 43vh;
+  height: max-content;
   margin-top: 20vh;
   flex-direction: column;
   margin-left: 452px;
@@ -35,11 +35,20 @@
   border-bottom: 1px solid white;
   font-family: "Open Sans";
 }
+#login div p {
+  color: white;
+  padding-top: 10px;
+}
 
 #loginbtn {
   margin-top: 60px;
 }
 #loginbtn .MuiButtonBase-root:hover {
+  opacity: 100%;
+  background-color: grey;
+  color: white;
+}
+#cadastrobtn .MuiButtonBase-root:hover {
   opacity: 100%;
   background-color: grey;
   color: white;

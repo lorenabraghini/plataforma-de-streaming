@@ -1,27 +1,12 @@
-const sql = require("mssql");
+const mysql = require("mysql");
+const connection = mysql.createConnection({
+  host: "169.57.96.180",
+  port: 30583,
+  user: "admin",
+  password: "@dminpa$$word",
+  database: "streaming",
+});
 
-const sqlConfig = {
-  user: "BD",
-  password: "epbancodedados",
-  database: "Streaming",
-  server: "localhost",
-  port: 1433,
-  pool: {
-    max: 10,
-    min: 0,
-    idleTimeoutMillis: 30000,
-  },
-  options: {
-    encrypt: false, // for azure
-    trustServerCertificate: true, // change to true for local dev / self-signed certs
-  },
-};
-
-async function conectar() {
-  const x = await sql.connect(sqlConfig);
-  console.log(x);
-}
-//conectar()
 function handleData(data) {
   let values = "";
   Object.entries(data).map(([key, value]) => {
@@ -38,10 +23,14 @@ function inserir(tabela, data) {
   return new Promise(async (resolve, reject) => {
     try {
       const values = handleData(data);
-      const db = await sql.connect(sqlConfig);
-      await db.request().query(`INSERT INTO [${tabela}] VALUES (${values})`);
-      resolve();
+      connection.query(
+        `INSERT INTO ${tabela} VALUES (${values})`,
+        (err, rows, fields) => {
+          return resolve("Incluido");
+        }
+      );
     } catch (error) {
+      console.log(error);
       reject(error);
     }
   });
@@ -50,10 +39,9 @@ function inserir(tabela, data) {
 function select(tabela) {
   return new Promise(async (resolve, reject) => {
     try {
-      const db = await sql.connect(sqlConfig);
-      const res = await db.request().query(`SELECT * FROM ${tabela}`);
-      console.log(res.recordset);
-      resolve(res.recordset);
+      connection.query(`SELECT * FROM ${tabela}`, (err, rows, fields) => {
+        return resolve(rows);
+      });
     } catch (error) {
       reject(error);
     }
@@ -62,12 +50,12 @@ function select(tabela) {
 function getUser(user) {
   return new Promise(async (resolve, reject) => {
     try {
-      const db = await sql.connect(sqlConfig);
-      const res = await db
-        .request()
-        .query(`SELECT * FROM Usuario WHERE id='${user}'`);
-      console.log(res.recordset);
-      resolve(res.recordset);
+      connection.query(
+        `SELECT * FROM Usuario WHERE login='${user}'`,
+        (err, rows, fields) => {
+          return resolve(rows);
+        }
+      );
     } catch (error) {
       reject(error);
     }

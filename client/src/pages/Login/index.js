@@ -12,10 +12,28 @@ export default function Login() {
   let history = useHistory();
   const [user, setUser] = useState("usuário");
   const [senha, setSenha] = useState("");
+  const [nome, setNome] = useState("Nome");
   const [encryptedText, setEncryptedText] = useState("senha");
+  const [mensagem, setMensagem] = useState("");
+  const [cadastro, setCadastro] = useState(false);
   function handleClick() {
     api.post("/getUser", { user }).then((result) => {
       setUsuario(result.data.user);
+      history.push("/dashboard");
+    });
+  }
+  function createUser() {
+    setMensagem("");
+    const usuario = {
+      id: user,
+      login: user,
+      nome,
+      imagem: null,
+      qtdSeguidores: 0,
+      qtdSeguindo: 0,
+    };
+    api.post("/insert", { tabela: "Usuario", elemento: usuario }).then(() => {
+      setUsuario(usuario);
       history.push("/dashboard");
     });
   }
@@ -35,21 +53,56 @@ export default function Login() {
     <div id="content">
       <Header />
       <Card id="login">
-        <div>
-          <input value={user} onChange={(e) => setUser(e.target.value)}></input>
-          <input
-            value={encryptedText}
-            onChange={(e) => {
-              setSenha(e.target.value);
-              setEncryptedText(e.target.value);
-            }}
-          ></input>
-          <div id="loginbtn" onClick={handleClick}>
-            <Button variant="contained" color="#621527">
-              Entrar
-            </Button>
+        {cadastro ? (
+          <div>
+            <input
+              value={user}
+              onChange={(e) => setUser(e.target.value)}
+            ></input>
+            <input
+              value={encryptedText}
+              onChange={(e) => {
+                setSenha(e.target.value);
+                setEncryptedText(e.target.value);
+              }}
+            ></input>
+            <input
+              value={nome}
+              onChange={(e) => {
+                setNome(e.target.value);
+              }}
+            ></input>
+            <div id="loginbtn" onClick={createUser}>
+              <Button variant="contained" color="#621527">
+                Entrar
+              </Button>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div>
+            <input
+              value={user}
+              onChange={(e) => setUser(e.target.value)}
+            ></input>
+            <input
+              value={encryptedText}
+              onChange={(e) => {
+                setSenha(e.target.value);
+                setEncryptedText(e.target.value);
+              }}
+            ></input>
+            <div id="loginbtn" onClick={handleClick}>
+              <Button variant="contained" color="#621527">
+                Entrar
+              </Button>
+            </div>
+            <div id="cadastrobtn" onClick={(e) => setCadastro(true)}>
+              <Button variant="contained" color="#621527">
+                Cadastrar-se
+              </Button>
+            </div>
+          </div>
+        )}
       </Card>
     </div>
   );

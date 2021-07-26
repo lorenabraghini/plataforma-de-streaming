@@ -12,6 +12,7 @@ const getAlbunsRoutes = require("./routes/getAlbuns-route");
 const getPodcastsRoutes = require("./routes/getPodcasts-route");
 const getEpisodesRoutes = require("./routes/getEpisodes-route");
 const getUserRoutes = require("./routes/getUser-route");
+const insertRoutes = require("./routes/insert-route");
 const app = express();
 const server = http.createServer(app);
 
@@ -30,15 +31,13 @@ app.use("/getAlbuns", getAlbunsRoutes);
 app.use("/getPodcasts", getPodcastsRoutes);
 app.use("/getEpisodes", getEpisodesRoutes);
 app.use("/getUser", getUserRoutes);
+app.use("/insert", insertRoutes);
 
-app.use(express.static(path.join(__dirname, "..", "client", "build")));
 app.use(express.static(path.join(__dirname, "../public", "index.html")));
 
 // default path to serve up index.html (single page application)
 app.use("", (req, res) => {
-  res
-    .status(200)
-    .sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
+  res.status(200).sendFile(path.join(__dirname, "../public", "index.html"));
 });
 
 // start node server

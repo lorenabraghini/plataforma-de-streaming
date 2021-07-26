@@ -6,6 +6,7 @@
 
 #album-infos img {
   max-width: 250px;
+  max-height: 250px;
 }
 #album-infos div {
   margin-left: 30px;

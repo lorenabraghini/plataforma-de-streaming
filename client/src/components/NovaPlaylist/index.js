@@ -10,11 +10,20 @@ import {
   CheckCircleOutline,
 } from "@material-ui/icons";
 import { useGlobalState } from "../../hooks/globalState";
+import api from "../../services/api";
 
 import "./style.css";
 
 export default function NovaPlaylist() {
-  const { musicas, setComponent, artistas, albuns } = useGlobalState();
+  const {
+    musicas,
+    setComponent,
+    artistas,
+    albuns,
+    usuario,
+    playlists,
+    setPlaylists,
+  } = useGlobalState();
   const [nome, setNome] = useState("Minha Playlist");
   const [search, setSearch] = useState("");
   const [addedSongs, setAddedSongs] = useState([]);
@@ -45,7 +54,21 @@ export default function NovaPlaylist() {
     }
     return updated;
   }
-
+  function handleClick() {
+    const playlist = {
+      nome,
+      descricao: "",
+      autor: usuario.id,
+      imagem: "https://imagizer.imageshack.com/img924/4420/0319Td.png",
+      musicas: addedSongs.join(","),
+    };
+    api
+      .post("/insert", { tabela: "Playlist", elemento: playlist })
+      .then((res) => {
+        setPlaylists([playlist, ...playlists]);
+        setComponent(<MinhasPlaylists />);
+      });
+  }
   return (
     <div id="novaPlaylist">
       <div className="info">
@@ -56,10 +79,7 @@ export default function NovaPlaylist() {
             onChange={(e) => setNome(e.target.value)}
             autoFocus={true}
           />
-          <div
-            className="send"
-            onClick={(e) => setComponent(<MinhasPlaylists />)}
-          >
+          <div className="send" onClick={handleClick}>
             <CheckCircleOutline className="icon" />
           </div>
         </div>
