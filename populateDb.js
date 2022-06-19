@@ -4,7 +4,7 @@ const { inserir } = require("./server/common/Database/helpers");
 
 const spotifyApi = new SpotifyWebApi();
 spotifyApi.setAccessToken(
-  "BQBdtb08i1AWuytgAwaN7P3CVCKD-8o1Wb-qsoK8ArejARUULAJtJ-f3Wj_2P1OsYeIuVRwqz0MUaCO8YMblgtKMgnUtAvxbcyuyJ4xvgS1BYvtE6P7v6V6v_WryvMrh52Dw7j0uKo9SBR2aFuKCoPTJzBwvMtvWhtEa0vGv0D_8LR6pdVRrZHqIkhDA7NOK5xGMDoDCYqjRA2O8wR0zicNoZltUVZYrlzdosndVcuwjnHNqcgL-Dy2s9yUQuQD_l74q3XQ8sesPxfKhD5JIRD3WjYtOGAs"
+  "BQB1QW0Dzsy3B74qKi-QTucMBBwtcFifB5S-2bX7tm4VqDpb-lcK5y93Qnb3X5d8XYRUmePrBlod-VmWiG3Hl7wPttww_jojBb1IDM4MI4khak5Bl36txYwaUuEt4TYRYI4pgklovuF75uGvoHB4Zkb-jWjXqeEAqE4RkYCWBAOsNWOhGRN5BS02B_CEIhsu300KjL0NqcPOtAG4W74_zot6kywWZsMHl1oo6G4Tm7N9Y_ytxOYViPbgK4rNB6fHlpJZ9sf4DTDei3Cu1PAynq5kFv09Ex9I99l-RA_w8FLi_lgUiWcjD_Dxik1RsGx3"
 );
 
 async function getPodcasts() {
@@ -45,22 +45,16 @@ function savePodcast(showInfo) {
 }
 
 async function main() {
-  // await getData("12177373955");
-  // await getData("lorenabraghinim");
-  // await getData("beatrizgnovais");
-  // await getData("42a7k17exshk6skvhnwblnl5j");
-  // await getData("y1sngcxx6cq0lbey4ydwqbe02");
-  // await getData("gugaschweps");
-  await getData("pedro_hobbit");
+  await getData("lorenabraghinim");
+  await getData("beatrizgnovais");
+  await getData("12177373955");
 }
 
 async function getData(user) {
-  console.log("oi");
   let user_playlists = await spotifyApi.getUserPlaylists(user, {
     limit: 50,
     offset: 0,
   });
-
   for (let playlist of user_playlists.body.items) {
     try {
       const tracks = await spotifyApi.getPlaylistTracks(playlist.id);
@@ -82,6 +76,7 @@ async function getData(user) {
         }
       }
       let play = savePlaylist(playlist, musicas);
+      console.log("PLAYLIST", user, play.name);
       inserir("Playlist", play).catch((e) => console.log("DUPLICADO"));
     } catch (error) {
       continue;
@@ -137,4 +132,4 @@ function saveArtist(artist) {
 }
 
 main();
-//getPodcasts();
+// getPodcasts();

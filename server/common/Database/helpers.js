@@ -1,9 +1,9 @@
 const mysql = require("mysql");
 const connection = mysql.createConnection({
-  host: "169.57.96.180",
-  port: 30583,
-  user: "admin",
-  password: "@dminpa$$word",
+  host: "159.122.187.36",
+  port: 31469,
+  user: "newuser",
+  password: "password",
   database: "streaming",
 });
 
@@ -30,7 +30,6 @@ function inserir(tabela, data) {
         }
       );
     } catch (error) {
-      console.log(error);
       reject(error);
     }
   });
