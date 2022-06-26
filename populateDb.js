@@ -1,6 +1,11 @@
 const SpotifyWebApi = require("spotify-web-api-node");
 const fs = require("fs");
-const { inserir } = require("./server/common/Database/helpers");
+const request = require("request");
+const {
+  inserir,
+  select,
+  inserirBlob,
+} = require("./server/common/Database/helpers");
 
 const spotifyApi = new SpotifyWebApi();
 spotifyApi.setAccessToken(
@@ -131,5 +136,37 @@ function saveArtist(artist) {
   return x;
 }
 
-main();
+function downloadAudio(url, name) {
+  return new Promise((resolve, reject) => {
+    const filepath = `${__dirname}/audios/${name.replace(
+      /[^A-Za-z]/g,
+      ""
+    )}.mp3`;
+    request
+      .get(url)
+      .on("error", function (err) {
+        console.log("Error downloading audio");
+      })
+      .pipe(fs.createWriteStream(filepath))
+      .on("finish", function () {
+        return resolve(filepath);
+      });
+  });
+}
+
+async function saveBlobs() {
+  let rows = await select("Musica");
+  for (let row of rows) {
+    if (row.url && !row.musicaBlob) {
+      console.log(row.nome);
+      const filepath = await downloadAudio(row.url, row.nome);
+      const buffer = fs.readFileSync(filepath);
+      await inserirBlob(row.url, buffer);
+      fs.unlinkSync(filepath);
+    }
+  }
+}
+
+// main();
 // getPodcasts();
+saveBlobs();

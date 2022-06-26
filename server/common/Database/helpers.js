@@ -46,6 +46,7 @@ function select(tabela) {
     }
   });
 }
+
 function getUser(user) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -61,4 +62,18 @@ function getUser(user) {
   });
 }
 
-module.exports = { inserir, select, getUser };
+function inserirBlob(url, blob) {
+  return new Promise(async (resolve, reject) => {
+    const query = `UPDATE Musica SET ? WHERE url='${url}'`;
+    const values = {
+      musicaBlob: blob,
+    };
+
+    connection.query(query, values, (err, rows, fields) => {
+      if (err) reject(err);
+      return resolve("Incluido");
+    });
+  });
+}
+
+module.exports = { inserir, select, getUser, inserirBlob };
