@@ -2,12 +2,14 @@ import React, { useState } from "react";
 
 import { useGlobalState } from "../../hooks/globalState";
 import Artista from "../Artista";
+import Modal from "../Modal";
 import ReactPlayer from "react-player";
 
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
 import SkipNextIcon from "@material-ui/icons/SkipNext";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
+import Mic from "@material-ui/icons/Mic";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -28,6 +30,7 @@ export default function Player() {
     albuns,
   } = useGlobalState();
   const [volume, setVolume] = useState(0.5);
+  const [open, setOpen] = useState(false);
   const album = currentSong
     ? albuns.filter((album) => album.nome === currentSong.nomeAlbum)
     : null;
@@ -81,6 +84,9 @@ export default function Player() {
             <div>
               <SkipNextIcon color="action" fontSize="large" />
             </div>
+            <div onClick={() => setOpen(true)}>
+              <Mic color="action" fontSize="medium" />
+            </div>
           </div>
           <Grid container spacing={2}>
             <Grid item>
@@ -110,6 +116,7 @@ export default function Player() {
           onEnded={(e) => setPlayingSong(false)}
         />
       </div>
+      <Modal open={open} setOpen={setOpen} />
     </div>
   );
 }

@@ -1,0 +1,25 @@
+--Nomes das músicas que pertencem a um álbum
+SELECT [nome] 
+FROM [dbo].[Musica] M
+INNER JOIN [dbo].[PertenceAlbum] A
+ON M.[idMusica] = A.[idMusica]
+
+
+--Músicas com mesmo nome que pertencem a álbuns diferentes
+SELECT [nome], COUNT()
+FROM [dbo].[Musica]
+GROUP BY [nome]
+HAVING COUNT() > 1
+
+
+--Álbuns lançados entre as datas 27/04/200 e 11/08/2000
+SELECT [nome]
+FROM [dbo].[Album]
+WHERE [dataPublicacao] between '27/04/2000' AND '11/08/2000'
+
+
+--Seguidores mútuos que um usuário possui
+SELECT [nome]
+FROM [dbo].[Usuario] A
+INNER JOIN [dbo].[UsuarioSegue] B
+ON A.[id] = B.[idUsuarioSeguindo]

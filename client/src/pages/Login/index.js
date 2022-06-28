@@ -10,17 +10,20 @@ import "./style.css";
 export default function Login() {
   const { setUsuario } = useGlobalState();
   let history = useHistory();
-  const [user, setUser] = useState("usuário");
+  const [user, setUser] = useState("");
   const [senha, setSenha] = useState("");
-  const [nome, setNome] = useState("Nome");
-  const [encryptedText, setEncryptedText] = useState("senha");
+  const [nome, setNome] = useState("");
   const [mensagem, setMensagem] = useState("");
   const [cadastro, setCadastro] = useState(false);
   function handleClick() {
-    api.post("/getUser", { user }).then((result) => {
-      setUsuario(result.data.user);
-      history.push("/dashboard");
-    });
+    api
+      .post("/getUser", { user })
+      .then((result) => {
+        console.log(result);
+        setUsuario(result.data.user);
+        history.push("/dashboard");
+      })
+      .catch((e) => console.log(e));
   }
   function createUser() {
     setMensagem("");
@@ -38,17 +41,6 @@ export default function Login() {
     });
   }
 
-  useEffect(() => {
-    let encrypted = "";
-    if (senha !== "") {
-      senha.split(" ").map((word) => {
-        encrypted += word.replace(/./gim, "*") + " ";
-        return encrypted;
-      });
-      setEncryptedText(encrypted);
-    }
-  }, [senha]);
-
   return (
     <div id="content">
       <Header />
@@ -56,17 +48,20 @@ export default function Login() {
         {cadastro ? (
           <div>
             <input
+              placeholder="usuario"
               value={user}
               onChange={(e) => setUser(e.target.value)}
             ></input>
             <input
-              value={encryptedText}
+              placeholder="senha"
+              value={senha}
               onChange={(e) => {
                 setSenha(e.target.value);
-                setEncryptedText(e.target.value);
               }}
+              type="password"
             ></input>
             <input
+              placeholder="nome"
               value={nome}
               onChange={(e) => {
                 setNome(e.target.value);
@@ -81,15 +76,17 @@ export default function Login() {
         ) : (
           <div>
             <input
+              placeholder="usuario"
               value={user}
               onChange={(e) => setUser(e.target.value)}
             ></input>
             <input
-              value={encryptedText}
+              placeholder="senha"
+              value={senha}
               onChange={(e) => {
                 setSenha(e.target.value);
-                setEncryptedText(e.target.value);
               }}
+              type="password"
             ></input>
             <div id="loginbtn" onClick={handleClick}>
               <Button variant="contained" color="#621527">
